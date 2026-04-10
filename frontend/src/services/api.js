@@ -1,7 +1,5 @@
 const BASE_URL = '/api';
 
-import { DUMMY_DATA } from "../data";
-
 export async function fetchCategories() {
   try {
     const res = await fetch(`${BASE_URL}/categories`);
@@ -27,8 +25,8 @@ export async function fetchCategories() {
         }))
     }));
   } catch (err) {
-    console.warn('API Error, falling back to dummy data:', err);
-    return DUMMY_DATA;
+    console.error('API Error:', err);
+    throw err;
   }
 }
 
