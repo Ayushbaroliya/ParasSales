@@ -14,14 +14,14 @@ const Navbar = () => {
   const closeMenu = () => setMenuOpen(false);
 
   const openWhatsApp = () => {
-    const msg = encodeURIComponent("Hi! I'd like to enquire about Paaras Tiles.");
+    const msg = encodeURIComponent("Hi! I'd like to enquire about Paras Sales.");
     window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
   };
 
   return (
     <nav className="navbar">
       <div className="nav-logo" onClick={() => { closeMenu(); navigate("/"); }}>
-        Paaras Tiles
+        Paras Sales
       </div>
 
       <div className="hamburger" onClick={toggleMenu}>
