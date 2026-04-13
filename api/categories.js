@@ -28,6 +28,18 @@ module.exports = async (req, res) => {
       }
       break;
 
+    case 'PUT':
+      if (!isAuthenticated) return res.status(401).json({ message: 'Unauthorized' });
+      try {
+        const { id: categoryId } = req.query; // get from query ?id=...
+        const updatedCategory = await Category.findByIdAndUpdate(categoryId, req.body, { new: true });
+        if (!updatedCategory) return res.status(404).json({ message: 'Category not found' });
+        res.status(200).json(updatedCategory);
+      } catch (error) {
+        res.status(400).json({ error: error.message });
+      }
+      break;
+
     case 'DELETE':
       if (!isAuthenticated) return res.status(401).json({ message: 'Unauthorized' });
       const { id } = req.query;
@@ -41,7 +53,7 @@ module.exports = async (req, res) => {
       break;
 
     default:
-      res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
+      res.setHeader('Allow', ['GET', 'POST', 'PUT', 'DELETE']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 };

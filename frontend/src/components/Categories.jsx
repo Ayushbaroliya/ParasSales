@@ -92,32 +92,7 @@ const Category = () => {
           return (
             <div key={item.id} className={`product-card ${item.isOutOfStock ? 'out-of-stock' : ''}`}>
               <Link to={item.isOutOfStock ? "#" : `/product/${item.id}`} style={{ pointerEvents: item.isOutOfStock ? 'none' : 'auto' }}>
-                <div style={{ position: 'relative' }}>
-                  <img src={item.image} className="product-image" alt={item.title} loading="lazy" />
-                  {item.isOutOfStock && (
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      zIndex: 10
-                    }}>
-                      <div style={{
-                        backgroundColor: '#ef4444',
-                        color: 'white',
-                        padding: '6px 12px',
-                        borderRadius: '4px',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        letterSpacing: '0.5px'
-                      }}>
-                        OUT OF STOCK
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <img src={item.image} className="product-image" alt={item.title} loading="lazy" />
               </Link>
               <div className="product-info">
                 <h3>{item.title}</h3>

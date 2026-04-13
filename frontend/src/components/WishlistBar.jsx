@@ -8,10 +8,10 @@ const WishlistBar = ({ wishlist, sendToWhatsApp }) => {
 
   return (
     <div className="wishlist-bar" role="status" aria-live="polite">
-      <span>{wishlist.length} item{wishlist.length > 1 ? "s" : ""} {language === "en" ? "selected" : "चयनित"}</span>
-      <button className="wa-btn wishlist-wa-btn" onClick={sendToWhatsApp}>
-        <FaWhatsapp size={17} />
-        {language === "en" ? "Send Enquiry" : "पूछताछ भेजें"}
+      <div className="item-count">{wishlist.length}</div>
+      <button className="wa-btn wishlist-wa-btn" onClick={sendToWhatsApp} title={language === "en" ? "Send Enquiry" : "पूछताछ भेजें"}>
+        <FaWhatsapp size={22} />
+        <span>Enquiry</span>
       </button>
     </div>
   );

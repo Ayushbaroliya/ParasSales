@@ -509,7 +509,30 @@ img { display: block; }
 }
 .product-card.out-of-stock {
   filter: grayscale(100%);
-  opacity: 0.8;
+  opacity: 0.7;
+  position: relative;
+  cursor: not-allowed;
+}
+.product-card.out-of-stock img {
+  filter: sepia(0.2) brightness(0.8);
+}
+.product-card.out-of-stock::after {
+  content: 'OUT OF STOCK';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  padding: 8px 16px;
+  font-weight: 800;
+  font-size: 14px;
+  border-radius: 4px;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 20;
 }
 .product-card:hover {
   transform: translateY(-5px);
@@ -633,29 +656,56 @@ img { display: block; }
 ══════════════════════════════════════════════════ */
 .wishlist-bar {
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 20px;
+  bottom: 100px;
   background: var(--card);
   border: 1px solid var(--border-glow);
-  padding: 11px 18px;
-  border-radius: 50px;
+  padding: 0;
+  border-radius: 30px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
-  box-shadow: 0 8px 40px rgba(0,0,0,.6), 0 0 0 1px var(--border-glow);
-  z-index: 150;
-  white-space: nowrap;
-  justify-content: space-between;
+  gap: 0;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px var(--border-glow);
+  z-index: 1000;
+  animation: floatIn 0.4s cubic-bezier(.17,.67,.26,1.45) both;
+  overflow: hidden;
 }
-@keyframes barSlideUp {
-  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateX(50px) scale(0.8); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
 }
-.wishlist-bar > span {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-h);
+
+.wishlist-bar .item-count {
+  background: var(--accent);
+  color: #000;
+  font-size: 12px;
+  font-weight: 800;
+  width: 100%;
+  text-align: center;
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wishlist-wa-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+  font-size: 10px !important;
+  gap: 3px !important;
+}
+
+.wishlist-wa-btn span {
+  font-size: 8px;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 
 /* ══════════════════════════════════════════════════

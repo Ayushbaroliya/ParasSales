@@ -8,10 +8,30 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || "916260942161";
 
+import WishlistBar from "./WishlistBar";
+
 const Product = () => {
   const { id } = useParams();
   const [state, setState] = useState({ item: null, category: null, loading: true, error: null });
   const { language } = useLanguage();
+
+  const [wishlist, setWishlist] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("wishlist")) || []; }
+    catch { return []; }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  const sendToWhatsApp = () => {
+    if (wishlist.length === 0) return alert("Select items first to send enquiry 😊");
+    const msg = wishlist
+      .map((item, idx) => `${idx + 1}. ${item.title} — ${item.price}\n   Image: ${item.image}`)
+      .join("\n\n");
+    const text = encodeURIComponent(`Hi! I'd like to enquire about:\n\n${msg}`);
+    window.open(`https://wa.me/${WA_NUMBER}?text=${text}`, "_blank");
+  };
 
   useEffect(() => {
     setState({ item: null, category: null, loading: true, error: null });
@@ -55,28 +75,55 @@ const Product = () => {
         ← {language === "en" ? category.name : (category.nameHi || category.name)}
       </Link>
 
-      <div className="product-detail">
-        <img src={item.image} alt={item.title} loading="lazy" />
+      <div className={`product-detail ${item.isOutOfStock ? 'out-of-stock' : ''}`}>
+        <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+          <img src={item.image} alt={item.title} loading="lazy" />
+          {item.isOutOfStock && (
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'rgba(0,0,0,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'white',
+              fontSize: '24px',
+              fontWeight: '900',
+              transform: 'rotate(-10deg)',
+              letterSpacing: '2px',
+              textShadow: '0 4px 10px rgba(0,0,0,0.5)'
+            }}>
+              OUT OF STOCK
+            </div>
+          )}
+        </div>
 
         <div className="product-detail-info">
           <p className="detail-category-badge">{category.icon} {category.name}</p>
           <h1>{item.title}</h1>
           <p className="detail-price">{item.price}</p>
+          {item.isOutOfStock && <p style={{ color: '#ef4444', fontWeight: 'bold', marginBottom: '10px' }}>⚠️ Currently unavailable</p>}
           <p className="detail-desc">{item.desc}</p>
 
           <a
-            href={`https://wa.me/${WA_NUMBER}?text=${waMsg}`}
-            target="_blank"
+            href={item.isOutOfStock ? "#" : `https://wa.me/${WA_NUMBER}?text=${waMsg}`}
+            target={item.isOutOfStock ? "_self" : "_blank"}
             rel="noreferrer"
             className="wa-btn wa-detail-btn"
+            style={{
+              opacity: item.isOutOfStock ? 0.5 : 1,
+              pointerEvents: item.isOutOfStock ? 'none' : 'auto',
+              backgroundColor: item.isOutOfStock ? '#64748b' : 'var(--wa)'
+            }}
           >
             <FaWhatsapp size={20} />
-            {language === "en" ? "Enquire on WhatsApp" : "व्हाट्सएप पर पूछताछ करें"}
+            {item.isOutOfStock ? (language === "en" ? "Out of Stock" : "स्टॉक में नहीं") : (language === "en" ? "Enquire on WhatsApp" : "व्हाट्सएप पर पूछताछ करें")}
           </a>
         </div>
       </div>
 
       <Footer />
+      <WishlistBar wishlist={wishlist} sendToWhatsApp={sendToWhatsApp} />
     </div>
   );
 };
