@@ -97,7 +97,14 @@ const Home = () => {
               key={cat.id}
               className={`category-card ${FEATURED.has(cat.id) ? "featured" : ""}`}
             >
-              <img src={cat.cover} className="category-image" alt={cat.name} loading="lazy" />
+              <img 
+                src={cat.cover || "https://images.unsplash.com/photo-1517646331032-9e8563c520a1?q=80&w=800&auto=format&fit=crop"} 
+                className="category-image" 
+                alt={cat.name} 
+                loading="lazy" 
+                decoding="async" 
+                onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1517646331032-9e8563c520a1?q=80&w=800&auto=format&fit=crop"; }}
+              />
               <div className="category-label">
                 <span className="category-icon">{cat.icon}</span>
                 <h3>{language === "en" ? cat.name : (cat.nameHi || cat.name)}</h3>

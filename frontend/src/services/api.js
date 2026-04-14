@@ -1,6 +1,10 @@
 const BASE_URL = '/api';
 
+let _categoriesCache = null;
+
 export async function fetchCategories() {
+  if (_categoriesCache) return _categoriesCache;
+  
   try {
     const res = await fetch(`${BASE_URL}/categories`);
     if (!res.ok) throw new Error('Failed to fetch categories');
@@ -11,7 +15,7 @@ export async function fetchCategories() {
     const tiles = await tilesRes.json();
 
     // Map DB categories to the structure frontend expects (with items)
-    return categories.map(cat => ({
+    _categoriesCache = categories.map(cat => ({
       ...cat,
       items: tiles
         .filter(tile => tile.category === cat.id)
@@ -24,6 +28,7 @@ export async function fetchCategories() {
           isOutOfStock: !tile.stockStatus
         }))
     }));
+    return _categoriesCache;
   } catch (err) {
     console.error('API Error:', err);
     throw err;

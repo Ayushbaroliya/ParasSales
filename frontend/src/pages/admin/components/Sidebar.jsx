@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ activeTab, setActiveTab, onLogout }) => {
+const Sidebar = ({ activeTab, setActiveTab, onLogout, mobileOpen }) => {
   const navigate = useNavigate();
   
   return (
-    <aside className="admin-sidebar" style={{ width: '250px', background: '#1e1e2f', color: '#fff', display: 'flex', flexDirection: 'column', height: '100vh', position: 'fixed', left: 0, top: 0 }}>
+    <aside className={`admin-sidebar ${mobileOpen ? 'mobile-open' : ''}`}>
       <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid #333' }}>
         <h2 style={{ margin: 0, color: '#f5a623', fontSize: '1.5rem', fontWeight: 'bold' }}>Paaras Admin</h2>
       </div>

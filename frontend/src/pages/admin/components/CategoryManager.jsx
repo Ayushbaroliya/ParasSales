@@ -61,9 +61,10 @@ const CategoryManager = ({ categories, refresh }) => {
     }
   };
 
+  
   return (
-    <div style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+    <div className="admin-card">
+      <div className="manager-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h2 style={{ margin: 0, color: '#333' }}>Category Management ({categories.length})</h2>
         <button 
           onClick={toggleForm} 
@@ -76,7 +77,7 @@ const CategoryManager = ({ categories, refresh }) => {
       {showForm && (
         <div style={{ marginBottom: '2rem', padding: '1.5rem', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
           <h3 style={{ marginTop: 0, color: '#1e293b' }}>{editingId ? 'Edit Category' : 'Create Category'}</h3>
-          <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <form onSubmit={handleSubmit} className="admin-form-grid">
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Slug ID (e.g. wall-tiles)</label>
               <input value={formData.id} onChange={e => setFormData({...formData, id: e.target.value.toLowerCase().replace(/\s+/g, '-')})} style={inputStyle} required />
@@ -125,7 +126,7 @@ const CategoryManager = ({ categories, refresh }) => {
                 <td style={{ padding: '1rem', fontFamily: 'monospace', color: '#64748b' }}>{c.id}</td>
                 <td style={{ padding: '1rem', fontWeight: '500' }}>{c.name}</td>
                 <td style={{ padding: '1rem', textAlign: 'right' }}>
-                  <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                     <button 
                       onClick={() => handleEdit(c)} 
                       style={{ color: '#3b82f6', backgroundColor: '#dbeafe', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '4px', cursor: 'pointer', fontWeight: '500', transition: 'all 0.2s' }}

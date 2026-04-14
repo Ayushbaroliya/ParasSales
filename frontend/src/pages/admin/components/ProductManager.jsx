@@ -65,9 +65,10 @@ const ProductManager = ({ tiles, categories, refresh }) => {
     setShowForm(false);
   };
 
+  
   return (
-    <div style={{ background: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+    <div className="admin-card">
+      <div className="manager-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h2 style={{ margin: 0, color: '#333' }}>Products Catalogue ({tiles.length})</h2>
         <button 
           onClick={() => openForm()}
@@ -78,7 +79,7 @@ const ProductManager = ({ tiles, categories, refresh }) => {
       </div>
 
       {showForm && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1200 }}>
           <div style={{ background: '#fff', padding: '2rem', borderRadius: '12px', width: '90%', maxWidth: '500px', maxHeight: '90vh', overflowY: 'auto' }}>
             <h3 style={{ marginTop: 0, borderBottom: '1px solid #eee', paddingBottom: '1rem' }}>
               {editingTile ? 'Edit Product' : 'Create New Product'}
@@ -149,14 +150,14 @@ const ProductManager = ({ tiles, categories, refresh }) => {
                 <strong style={{ color: '#0f172a' }}>{tile.price}</strong>
               </div>
               
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
-                <button onClick={() => openForm(tile)} style={{ flex: 1, ...actionBtnStyle, background: '#3b82f6', color: '#fff' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto', flexWrap: 'wrap' }}>
+                <button onClick={() => openForm(tile)} style={{ flex: '1 1 60px', ...actionBtnStyle, background: '#3b82f6', color: '#fff' }}>
                   Edit
                 </button>
-                <button onClick={() => handleToggleStock(tile)} style={{ flex: 1, ...actionBtnStyle, background: '#f59e0b', color: '#fff' }}>
+                <button onClick={() => handleToggleStock(tile)} style={{ flex: '1 1 60px', ...actionBtnStyle, background: '#f59e0b', color: '#fff' }}>
                   Stock
                 </button>
-                <button onClick={() => handleDelete(tile._id)} style={{ flex: 1, ...actionBtnStyle, background: '#ef4444', color: '#fff' }}>
+                <button onClick={() => handleDelete(tile._id)} style={{ flex: '1 1 60px', ...actionBtnStyle, background: '#ef4444', color: '#fff' }}>
                   Delete
                 </button>
               </div>

@@ -42,12 +42,19 @@ const AdminDashboard = () => {
     navigate('/admin/login');
   };
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', fontFamily: '"Inter", sans-serif' }}>
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={handleLogout} />
+    <div className="admin-layout">
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={(tab) => { setActiveTab(tab); setIsMobileMenuOpen(false); }} 
+        onLogout={handleLogout} 
+        mobileOpen={isMobileMenuOpen}
+      />
       
-      <main style={{ marginLeft: '250px', flex: 1, padding: '2rem' }}>
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', background: '#fff', padding: '1rem 2rem', borderRadius: '12px', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+      <main className="admin-main">
+        <header className="admin-header">
           <div>
             <h1 style={{ margin: 0, fontSize: '1.5rem', color: '#1e293b' }}>
               {activeTab === 'dashboard' ? 'Overview Dashboard' : activeTab === 'categories' ? 'Category Management' : 'Products & Pricing'}
@@ -55,7 +62,7 @@ const AdminDashboard = () => {
             <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.875rem' }}>Manage your tiles, marbles, and product categories.</p>
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className="user-profile" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#3b82f6', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>A</div>
           </div>
         </header>
@@ -83,6 +90,15 @@ const AdminDashboard = () => {
             )}
           </div>
         )}
+
+        {/* Mobile Toggle Button */}
+        <button 
+          className="admin-mobile-toggle" 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle Menu"
+        >
+          {isMobileMenuOpen ? '✕' : '☰'}
+        </button>
       </main>
     </div>
   );
