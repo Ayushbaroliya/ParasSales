@@ -9,16 +9,25 @@ const FEATURED = new Set(["marble", "granite", "wall-tiles"]);
 const WA_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || "916260942161";
 
 const Skeleton = () => (
-  <div className="categories-grid">
-    {Array.from({ length: 6 }).map((_, i) => (
-      <div key={i} className="category-card skeleton-card">
-        <div className="skeleton skeleton-img" />
-        <div className="category-label">
-          <div className="skeleton skeleton-line" style={{ width: "60%", height: 14 }} />
-          <div className="skeleton skeleton-line" style={{ width: "90%", height: 11, marginTop: 6 }} />
+  <div className="categories-loading-wrapper">
+    <div className="categories-loading-text-container">
+      <div className="loading-spinner-dot" />
+      <span className="loading-text">Loading categories...</span>
+    </div>
+    <div className="categories-loading-bar">
+      <div className="categories-loading-bar-fill" />
+    </div>
+    <div className="categories-grid" style={{ padding: "0 0 44px 0" }}>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="category-card skeleton-card">
+          <div className="skeleton skeleton-img" />
+          <div className="category-label">
+            <div className="skeleton skeleton-line" style={{ width: "60%", height: 14 }} />
+            <div className="skeleton skeleton-line" style={{ width: "90%", height: 11, marginTop: 6 }} />
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 );
 
