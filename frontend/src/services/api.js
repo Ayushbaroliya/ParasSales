@@ -6,13 +6,18 @@ export async function fetchCategories() {
   if (_categoriesCache) return _categoriesCache;
   
   try {
-    const res = await fetch(`${BASE_URL}/categories`);
+    const [res, tilesRes] = await Promise.all([
+      fetch(`${BASE_URL}/categories`),
+      fetch(`${BASE_URL}/tiles`)
+    ]);
+
     if (!res.ok) throw new Error('Failed to fetch categories');
-    const categories = await res.json();
-    
-    // Fetch tiles to group them into categories for the frontend expectation
-    const tilesRes = await fetch(`${BASE_URL}/tiles`);
-    const tiles = await tilesRes.json();
+    if (!tilesRes.ok) throw new Error('Failed to fetch tiles');
+
+    const [categories, tiles] = await Promise.all([
+      res.json(),
+      tilesRes.json()
+    ]);
 
     // Map DB categories to the structure frontend expects (with items)
     _categoriesCache = categories.map(cat => ({

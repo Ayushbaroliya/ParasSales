@@ -33,4 +33,7 @@ const tileSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+tileSchema.index({ category: 1 });
+tileSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.models.Tile || mongoose.model('Tile', tileSchema);

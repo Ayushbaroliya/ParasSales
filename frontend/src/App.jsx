@@ -32,20 +32,19 @@ function Layout() {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Give fonts & first paint a moment, then fade out preloader
-    const fadeTimer = setTimeout(() => setFadeOut(true), 400);
-    const hideTimer = setTimeout(() => setInitialLoad(false), 800);
+    // Fade out preloader overlay quickly, unmounting it shortly after
+    const fadeTimer = setTimeout(() => setFadeOut(true), 150);
+    const hideTimer = setTimeout(() => setInitialLoad(false), 450);
     return () => {
       clearTimeout(fadeTimer);
       clearTimeout(hideTimer);
     };
   }, []);
 
-  if (initialLoad)
-    return <Preloader fadeOut={fadeOut} />;
-
   return (
     <>
+      {initialLoad && <Preloader fadeOut={fadeOut} />}
+
       {!isAdminPage && <Navbar />}
       {!isAdminPage && <CategoryNav />}
 
